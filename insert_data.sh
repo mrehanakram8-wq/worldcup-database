@@ -8,9 +8,6 @@ else
 fi
 
 # Do not change code above this line. Use the PSQL variable above to query your database.
-#!/bin/bash
-
-PSQL="psql --username=freecodecamp --dbname=worldcup -t --no-align -c"
 
 cat games.csv | while IFS="," read YEAR ROUND WINNER OPPONENT WINNER_GOALS OPPONENT_GOALS
 do
@@ -18,7 +15,8 @@ do
   then
     WINNER_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$WINNER'")
 
-    if [[ -z $WINNER_ID ]]
+    if [[ -z $WINNER_ID
+     ]]
     then
       $PSQL "INSERT INTO teams(name) VALUES('$WINNER')"
       WINNER_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$WINNER'")
